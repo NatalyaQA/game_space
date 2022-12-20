@@ -12,10 +12,10 @@ def events(screen, gun, bullets):
         if event.type == pygame.QUIT:  # если нажал на крестик - выход
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            # вправо
-            if event.key == pygame.K_d:
+
+            if event.key == pygame.K_d or event.key == pygame.K_RIGHT:   # вправо
                 gun.mright = True    # изначально движение на 1 - gun.rect.centerx += 1
-            elif event.key == pygame.K_a:
+            elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 gun.mleft = True
             elif event.key == pygame.K_SPACE:
                 new_bullet = Bullet(screen, gun)
@@ -23,9 +23,9 @@ def events(screen, gun, bullets):
 
         elif event.type == pygame.KEYUP:
             # вправо
-            if event.key == pygame.K_d:
+            if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 gun.mright = False
-            elif event.key == pygame.K_a:
+            elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 gun.mleft = False
 
 
@@ -49,6 +49,9 @@ def update_bullets(screen, stats, sc, inos, bullets):
     # print(len(bullets))  # проверка значений количества пуль на экране
     collisions = pygame.sprite.groupcollide(bullets, inos, True, True)
     if collisions:
+        if (stats.score % 500 == 0) and (stats.score // 200 != 0):
+            ino.boost *= 1.1
+
         for inos in collisions.values():
             stats.score += 10 * len(inos)
         sc.image_score()

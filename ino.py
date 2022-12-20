@@ -1,5 +1,7 @@
 import pygame
+import stats
 
+boost = 1
 
 class Ino(pygame.sprite.Sprite):
     """класс одного пришельца"""
@@ -21,5 +23,5 @@ class Ino(pygame.sprite.Sprite):
 
     def update(self):
         """перемещает пришельцев"""
-        self.y += 0.1
+        self.y += 0.1 * boost
         self.rect.y = self.y
